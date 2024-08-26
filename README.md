@@ -49,7 +49,9 @@ The project follows the Page Object Model (POM) design pattern, including the fo
 
 ### UI Steps
 
-UI flakiness is present in the tests, which may affect the stability of UI interactions during test execution.
+UI flakiness is present in the tests, which may affect the stability of UI interactions during test execution. This issue not only impacts the reliability of the tests but also poses a challenge in writing and designing the framework. Specifically, the inconsistent behavior of the authentication process has led to varying results: for some test runs, the authentication works correctly, while for others, the authentication process fails due to asynchronous issues. This inconsistency has made it difficult to proceed with writing and refining the code and test cases effectively.
+
+
 
 ### Test Data
 
