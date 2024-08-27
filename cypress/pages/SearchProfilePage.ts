@@ -34,11 +34,11 @@ export default class SearchProfilePage {
     private get searchResultCellSelector(){
         return '#cell-2 > .clickable';
     }
-
  
 
 	load() {
-        cy.visit('/frontoffice/#/profileslist?tenant_id=59');
+      //  cy.visit('/frontoffice/#/profileslist?tenant_id=59');
+      cy.visit('/frontoffice/#/profileslist');
 	}
 
 	getPanelTitle() {
@@ -76,30 +76,33 @@ export default class SearchProfilePage {
           });
         }
 
-        assertOnTheCellsContent(guest:GuestProfile){
-            cy.get('mat-row') // Selects all mat-row elements (or use a more specific selector if needed)
-            .each(($row) => {
-                // Assert on the content of the cell with id 'cell-2' (Name column)
-                cy.wrap($row).find('#cell-2').invoke('text').then((cellText) => {
-                  const trimmedText = cellText.trim().toUpperCase(); // Remove extra spaces and convert to uppercase
-                  expect(trimmedText).to.include(guest.getFirstName); // Check if 'JA' is included in the cell text
-                });
-        
-                // Assert on the content of the cell with id 'cell-11' (Country column)
-                cy.wrap($row).find('#cell-11').invoke('text').then((cellText) => {
-                    expect(cellText.trim()).to.equal(guest.getCountry);
-                });
-            });
-        }
 
         searchWithAllEmptyFields() {
             cy.get(this.resetButton).click();
             cy.get(this.searchButton).click();
 
         }
-    
-    
-        assertionForlistingAllProfiles(){
+
+        //[t]
+        assertOnTheCellsContent(guest:GuestProfile){
+            cy.get('mat-row') // Selects all mat-row elements (or use a more specific selector if needed)
+            .each(($row) => {
+                // Assert on the content of the cell with id 'cell-2' (Name column)
+                cy.wrap($row).find('#cell-2').invoke('text').then((cellText) => {
+                  const trimmedText = cellText.trim().toUpperCase(); // Remove extra spaces and convert to uppercase
+                  expect(trimmedText).to.include(guest.getFirstName()); // Check if 'JA' is included in the cell text
+                });
+        
+                // Assert on the content of the cell with id 'cell-11' (Country column)
+                cy.wrap($row).find('#cell-11').invoke('text').then((cellText) => {
+                    expect(cellText.trim()).to.equal(guest.getCountry());
+                });
+            });
+        }
+
+
+        // [Todo]More Generic Search result asserion 
+        assertSearchResults(){
             // Example assertion for listing all profiles
             cy.get('mat-table') // Target the mat-table element
             .should('be.visible') // Ensure the table is visible
@@ -107,5 +110,9 @@ export default class SearchProfilePage {
             .should('have.length.greaterThan', 0); // Verify there are rows in the table
     
         }
+
+
+
+
 
 }
